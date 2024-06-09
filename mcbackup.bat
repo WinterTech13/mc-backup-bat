@@ -17,20 +17,23 @@ echo What world would you like to back up?
 echo.
 dir /a:d /b
 echo.
-set /p do=World Name 
+set /p world=World Name 
 
-if not exist "%do%" goto error
+if not exist "%world%" goto error
 
-set BackupName="%do%"_Backup%Mon%-%Day%-%Yr%(%Hr%%Min%)
-tar.exe -a -cf %BackupName%.zip "%do%"
+set BackupName="%world%"_Backup%Mon%-%Day%-%Yr%(%Hr%%Min%)
+cls
+echo Backing up %world%...
+tar.exe -a -cf %BackupName%.zip "%world%"
 copy %BackupName%.zip C:\Users\%USERNAME%\Desktop\%BackupName%.zip
 del %BackupName%.zip
 
 cls
-echo World Backed Up! (Check the desktop!)
+echo %world% backed up! (Check the desktop!)
 goto ex
 
 :error
+cls
 echo The world you inputted does not exist! :O
 goto ex
 
