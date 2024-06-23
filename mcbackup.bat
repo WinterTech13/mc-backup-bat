@@ -6,24 +6,17 @@ cls
 C:
 cd "C:\Users\%USERNAME%\AppData\Roaming\.minecraft\saves"
 
-for /f "delims=" %%a in ('wmic OS Get localdatetime ^| find "."') do set DateTime=%%a
-set Yr=%DateTime:~0,4%
-set Mon=%DateTime:~4,2%
-set Day=%DateTime:~6,2%
-set Hr=%DateTime:~8,2%
-set Min=%DateTime:~10,2%
-
 echo.
 echo Which world would you like to back up?
 echo.
 dir /a:d /b
 echo.
 set /p world=World Name: 
-
 if not exist "%world%" goto error
 
-set BackupName="%world%"_%Mon%%Day%%Yr%%Hr%%Min%
 cls
+for /f "delims=" %%a in ('wmic OS Get localdatetime ^| find "."') do set DateTime=%%a
+set BackupName="%world%"_%DateTime:~4,2%%DateTime:~6,2%%DateTime:~0,4%%DateTime:~8,2%%DateTime:~10,2%
 echo Backing up %world%...
 tar.exe -a -cf %BackupName%.zip "%world%"
 copy %BackupName%.zip C:\Users\%USERNAME%\Desktop\%BackupName%.zip
