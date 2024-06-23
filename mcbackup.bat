@@ -1,6 +1,7 @@
 REM MC Backup by WinterTech13
 
 @echo off
+title Minecraft Backup (Java)
 cls
 C:
 cd "C:\Users\%USERNAME%\AppData\Roaming\.minecraft\saves"
@@ -21,7 +22,7 @@ set /p world=World Name:
 
 if not exist "%world%" goto error
 
-set BackupName="%world%"_Backup%Mon%-%Day%-%Yr%(%Hr%%Min%)
+set BackupName="%world%"_%Mon%%Day%%Yr%%Hr%%Min%
 cls
 echo Backing up %world%...
 tar.exe -a -cf %BackupName%.zip "%world%"
