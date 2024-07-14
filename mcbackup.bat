@@ -17,10 +17,14 @@ cls
 echo Invalid selection!
 goto ex
 
+
 :java
 title Minecraft Backup (Java)
 cls
-cd "C:\Users\%USERNAME%\AppData\Roaming\.minecraft\saves"
+set savedir="C:\Users\%USERNAME%\AppData\Roaming\.minecraft\saves"
+if not exist %savedir% goto saveerror
+
+cd %savedir%
 
 echo.
 echo Which world would you like to back up?
@@ -33,11 +37,15 @@ if not exist "%world%" goto error
 set selectedWorld=%world%
 goto backup
 
+
 :bedrock
 setlocal EnableDelayedExpansion
 title Minecraft Backup (Bedrock)
 cls
-cd "%localappdata%\Packages\Microsoft.MinecraftUWP_8wekyb3d8bbwe\LocalState\games\com.mojang\minecraftWorlds"
+set savedir="C:\Users\%USERNAME%\AppData\Local\Packages\Microsoft.MinecraftUWP_8wekyb3d8bbwe\LocalState\games\com.mojang\minecraftWorlds"
+if not exist %savedir% goto saveerror
+
+cd %savedir%
 for /d %%d in ("*") do (
     set worldFolders=!worldFolders! "%%d"
     cd "%%d"
@@ -63,6 +71,7 @@ for %%a in (%worldNames%) do (
 )
 goto error
 
+
 :bbu
 set /a index=0
 for %%d in (%worldFolders%) do (
@@ -72,6 +81,7 @@ for %%d in (%worldFolders%) do (
     )
 )
 goto backup
+
 
 :backup
 setlocal DisableDelayedExpansion
@@ -87,11 +97,20 @@ cls
 echo %selectedWorld% backed up! Check the Desktop.
 goto ex
 
+
+:saveerror
+setlocal DisableDelayedExpansion
+cls
+echo Could not detect Mincraft installation!
+goto ex
+
+
 :error
 setlocal DisableDelayedExpansion
 cls
 echo The world you entered does not exist!
 goto ex
+
 
 :ex
 pause
