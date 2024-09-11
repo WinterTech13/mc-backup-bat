@@ -2,6 +2,7 @@ REM MC Backup by WinterTech13
 
 @echo off
 title Minecraft Backup
+color 02
 C:
 cls
 echo.
